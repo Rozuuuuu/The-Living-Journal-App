@@ -18,12 +18,10 @@ function App() {
     <JournalProvider>
       <BrowserRouter>
         <Routes>
-          {/* Immersive routes — no shell chrome */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/focus" element={<FocusMode />} />
-
           {/* Shell routes — persistent Sidebar, MobileNav, FloatingButton */}
           <Route element={<MainLayout />}>
+            <Route path="/login" element={<Login />} />
+            <Route path="/focus" element={<FocusMode />} />
             <Route path="/inbox" element={<BrainDumpPage />} />
             <Route path="/timeline" element={<LivingDay />} />
             <Route path="/agents" element={<ActiveAgents />} />

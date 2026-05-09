@@ -7,7 +7,7 @@ export default function FloatingButton() {
   return (
     <button
       onClick={toggleListening}
-      className={`fixed bottom-24 md:bottom-xl right-lg md:right-xl w-14 h-14 rounded-full shadow-ambient-2 flex items-center justify-center hover:scale-105 active:scale-95 transition-all duration-200 z-50 relative ${
+      className={`fixed bottom-24 md:bottom-xl right-lg md:right-xl w-14 h-14 rounded-full shadow-ambient-2 flex items-center justify-center hover:scale-105 active:scale-95 transition-all duration-200 z-50 ${
         isListening
           ? 'listening-active text-white'
           : 'bg-secondary text-on-secondary hover:opacity-90'

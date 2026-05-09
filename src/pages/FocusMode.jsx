@@ -5,9 +5,9 @@ export default function FocusMode() {
   const navigate = useNavigate();
 
   return (
-    <div className="bg-background text-on-background min-h-screen flex flex-col justify-between p-lg overflow-hidden w-full max-w-md mx-auto">
+    <div className="w-full h-full flex flex-col items-center pt-[100px] md:pt-0 max-w-container-max mx-auto px-gutter md:px-xxl py-xl md:py-xxl">
       {/* Top Section: Current Task & Exit */}
-      <header className="flex flex-col items-center pt-xl space-y-md relative">
+      <header className="flex flex-col items-center w-full max-w-2xl relative mb-xl">
         <button 
           onClick={() => navigate(-1)}
           className="text-on-surface-variant hover:text-primary transition-colors flex items-center gap-2 self-start absolute top-0 left-0"
@@ -15,14 +15,14 @@ export default function FocusMode() {
           <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 0" }}>close</span>
           <span className="font-label-md text-label-md sr-only">Exit Focus</span>
         </button>
-        <div className="text-center mt-xl">
+        <div className="text-center">
           <h2 className="font-label-sm text-label-sm text-on-surface-variant tracking-widest uppercase mb-sm">Current Focus</h2>
-          <h1 className="font-headline-lg-mobile text-headline-lg-mobile text-primary">Chapter 3: Cognitive Mapping</h1>
+          <h1 className="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary">Chapter 3: Cognitive Mapping</h1>
         </div>
       </header>
 
       {/* Center Section: Pomodoro Timer */}
-      <main className="flex-grow flex flex-col items-center justify-center">
+      <main className="flex-1 flex flex-col items-center justify-center w-full max-w-2xl my-xxl">
         {/* Elegant Circular Timer Representation */}
         <div className="relative w-64 h-64 flex items-center justify-center mb-xl">
           {/* Subtle background ring */}
@@ -44,7 +44,7 @@ export default function FocusMode() {
       </main>
 
       {/* Bottom Section: Ambient Sounds */}
-      <footer className="pb-xl">
+      <footer className="w-full max-w-2xl mt-auto">
         <h3 className="font-label-sm text-label-sm text-on-surface-variant text-center mb-md uppercase tracking-widest">Ambient Sound</h3>
         <div className="flex justify-center gap-md">
           {/* Sound Toggle: Rain (Active) */}

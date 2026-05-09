@@ -2,12 +2,12 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useJournal } from '../hooks/useJournal';
 
-export default function MobileHeader() {
+export default function MobileHeader({ onMenuClick }) {
   const { agentPulseActive } = useJournal();
 
   return (
     <header className="md:hidden bg-surface shadow-sm docked full-width top-0 flex justify-between items-center px-lg py-md w-full transition-all duration-300 ease-in-out z-40 relative">
-      <button className="text-primary hover:opacity-80 transition-opacity">
+      <button onClick={onMenuClick} className="text-primary hover:opacity-80 transition-opacity">
         <span className="material-symbols-outlined text-[24px]">menu</span>
       </button>
       <h1 className="font-headline-lg text-headline-lg font-semibold text-primary">The Living Journal</h1>

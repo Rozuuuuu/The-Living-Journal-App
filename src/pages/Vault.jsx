@@ -18,7 +18,7 @@ export default function Vault() {
         <div className="relative z-10 p-xxl flex flex-col items-center justify-center text-center min-h-[360px]">
           <span className="material-symbols-outlined text-[48px] text-secondary mb-md opacity-80" style={{ fontVariationSettings: "'FILL' 1" }}>center_focus_strong</span>
           <h2 className="font-headline-lg text-headline-lg text-primary mb-sm">Focus Mode</h2>
-          <p className="font-body-md text-body-md text-on-surface-variant max-w-md mx-auto mb-xl">Silence distractions, hide secondary navigation, and immerse yourself entirely in a single stream of thought.</p>
+          <p className="font-body-md text-body-md text-on-surface-variant max-w-[448px] mx-auto mb-xl">Silence distractions, hide secondary navigation, and immerse yourself entirely in a single stream of thought.</p>
           
           {/* Large Minimalist Toggle */}
           <label className="relative inline-flex items-center cursor-pointer group/toggle">
