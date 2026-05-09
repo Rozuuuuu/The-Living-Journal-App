@@ -6,50 +6,158 @@
   .shadow-ambient-2, .shadow-level-2, .custom-shadow-active { box-shadow: 0 8px 30px rgba(45, 45, 45, 0.08); }
 }
 
-/* Focus Toggle Custom Styling */
-.focus-toggle-input:checked + .focus-toggle-bg {
-    background-color: theme('colors.secondary');
-}
-.focus-toggle-input:checked + .focus-toggle-bg .focus-toggle-knob {
-    transform: translateX(100%);
+/* ===== AGENT PULSE GLOW ===== */
+@keyframes pulse-sage {
+  0%, 100% {
+    box-shadow: 0 0 4px 1px rgba(156, 175, 136, 0.4);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 12px 4px rgba(156, 175, 136, 0.6);
+    transform: scale(1.1);
+  }
 }
 
-/* Account & Sovereignty Custom Styling */
+.agent-pulse {
+  animation: pulse-sage 2.4s ease-in-out infinite;
+}
+
+.agent-pulse-idle {
+  box-shadow: 0 0 4px 1px rgba(156, 175, 136, 0.3);
+}
+
+/* ===== TASK CAPTURED MICRO-INTERACTION ===== */
+@keyframes task-captured {
+  0% {
+    opacity: 0;
+    transform: translateY(8px) scale(0.95);
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  80% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
+  }
+}
+
+.task-captured-toast {
+  animation: task-captured 1.8s ease-in-out forwards;
+}
+
+/* ===== VOICE LISTENING ANIMATION ===== */
+@keyframes listening-ring {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+.listening-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  border: 2px solid #9CAF88;
+  animation: listening-ring 1.5s ease-out infinite;
+}
+
+.listening-ring-delay {
+  animation-delay: 0.5s;
+}
+
+@keyframes listening-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+.listening-active {
+  animation: listening-pulse 0.8s ease-in-out infinite;
+  background-color: #9CAF88 !important;
+}
+
+/* ===== DRAG AND DROP ===== */
+@keyframes drag-lift {
+  from { box-shadow: 0 4px 20px rgba(45, 45, 45, 0.04); }
+  to   { box-shadow: 0 12px 40px rgba(45, 45, 45, 0.12); }
+}
+
+.dragging {
+  animation: drag-lift 0.2s ease forwards;
+  opacity: 0.92;
+  z-index: 100;
+}
+
+.drag-handle {
+  cursor: grab;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.drag-handle:active {
+  cursor: grabbing;
+}
+
+*:hover > .drag-handle {
+  opacity: 0.5;
+}
+
+*:hover > .drag-handle:hover {
+  opacity: 1;
+}
+
+/* ===== FOCUS TOGGLE ===== */
+.focus-toggle-input:checked + .focus-toggle-bg {
+  background-color: theme('colors.secondary');
+}
+.focus-toggle-input:checked + .focus-toggle-bg .focus-toggle-knob {
+  transform: translateX(100%);
+}
+
+/* ===== ACCOUNT & SOVEREIGNTY ===== */
 .elevation-0 { background-color: #F9F8F6; }
 .elevation-1 { background-color: #FFFFFF; box-shadow: 0 4px 20px 0 rgba(45, 45, 45, 0.04); }
 .elevation-2 { box-shadow: 0 8px 30px 0 rgba(45, 45, 45, 0.08); }
 
 .input-editorial {
-    border: 1px solid #c4c7c7;
-    background: transparent;
-    transition: all 0.2s ease;
+  border: 1px solid #c4c7c7;
+  background: transparent;
+  transition: all 0.2s ease;
 }
 .input-editorial:focus {
-    border-color: #9CAF88;
-    border-width: 2px;
-    outline: none;
-    box-shadow: none;
+  border-color: #9CAF88;
+  border-width: 2px;
+  outline: none;
+  box-shadow: none;
 }
 
 .toggle-checkbox:checked {
-    right: 0;
-    border-color: #9CAF88;
+  right: 0;
+  border-color: #9CAF88;
 }
 .toggle-checkbox:checked + .toggle-label {
-    background-color: #9CAF88;
+  background-color: #9CAF88;
 }
 .toggle-checkbox {
-    right: 0;
-    z-index: 1;
-    border-color: #e5e2e1;
-    transition: all 0.3s;
+  right: 0;
+  z-index: 1;
+  border-color: #e5e2e1;
+  transition: all 0.3s;
 }
 .toggle-label {
-    width: 44px;
-    height: 24px;
-    background-color: #e5e2e1;
-    border-radius: 9999px;
-    transition: all 0.3s;
+  width: 44px;
+  height: 24px;
+  background-color: #e5e2e1;
+  border-radius: 9999px;
+  transition: all 0.3s;
 }
 
 body {
