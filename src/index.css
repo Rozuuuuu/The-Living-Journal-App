@@ -1,0 +1,57 @@
+@import "tailwindcss";
+@config "../tailwind.config.js";
+
+@layer utilities {
+  .shadow-ambient-1, .shadow-level-1, .custom-shadow, .card-shadow { box-shadow: 0 4px 20px rgba(45, 45, 45, 0.04); }
+  .shadow-ambient-2, .shadow-level-2, .custom-shadow-active { box-shadow: 0 8px 30px rgba(45, 45, 45, 0.08); }
+}
+
+/* Focus Toggle Custom Styling */
+.focus-toggle-input:checked + .focus-toggle-bg {
+    background-color: theme('colors.secondary');
+}
+.focus-toggle-input:checked + .focus-toggle-bg .focus-toggle-knob {
+    transform: translateX(100%);
+}
+
+/* Account & Sovereignty Custom Styling */
+.elevation-0 { background-color: #F9F8F6; }
+.elevation-1 { background-color: #FFFFFF; box-shadow: 0 4px 20px 0 rgba(45, 45, 45, 0.04); }
+.elevation-2 { box-shadow: 0 8px 30px 0 rgba(45, 45, 45, 0.08); }
+
+.input-editorial {
+    border: 1px solid #c4c7c7;
+    background: transparent;
+    transition: all 0.2s ease;
+}
+.input-editorial:focus {
+    border-color: #9CAF88;
+    border-width: 2px;
+    outline: none;
+    box-shadow: none;
+}
+
+.toggle-checkbox:checked {
+    right: 0;
+    border-color: #9CAF88;
+}
+.toggle-checkbox:checked + .toggle-label {
+    background-color: #9CAF88;
+}
+.toggle-checkbox {
+    right: 0;
+    z-index: 1;
+    border-color: #e5e2e1;
+    transition: all 0.3s;
+}
+.toggle-label {
+    width: 44px;
+    height: 24px;
+    background-color: #e5e2e1;
+    border-radius: 9999px;
+    transition: all 0.3s;
+}
+
+body {
+  min-height: max(884px, 100dvh);
+}
