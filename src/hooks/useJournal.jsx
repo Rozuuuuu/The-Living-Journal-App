@@ -2,6 +2,21 @@ import React, { createContext, useContext, useState, useCallback } from 'react';
 
 const JournalContext = createContext(null);
 
+const RECEIPTS_STORAGE_KEY = 'decision_receipts';
+
+function loadReceipts() {
+  try {
+    const raw = localStorage.getItem(RECEIPTS_STORAGE_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
+}
+
+function persistReceipts(receipts) {
+  localStorage.setItem(RECEIPTS_STORAGE_KEY, JSON.stringify(receipts));
+}
+
 const INITIAL_TASKS = [
   { id: 't1', text: 'Research cognitive mapping frameworks', status: 'active', createdAt: Date.now() - 3600000 },
   { id: 't2', text: 'Draft editorial strategy document', status: 'active', createdAt: Date.now() - 7200000 },
@@ -73,22 +88,42 @@ export function JournalProvider({ children }) {
   const [timelineEvents, setTimelineEvents] = useState(INITIAL_TIMELINE);
   const [isListening, setIsListening] = useState(false);
   const [lastCaptured, setLastCaptured] = useState(null);
+  const [isAgentActive, setIsAgentActive] = useState(false);
+  const [decisionReceipts, setDecisionReceipts] = useState(loadReceipts);
 
-  // Derive agentPulseActive from whether any agent is active
-  const agentPulseActive = agents.some(a => a.status === 'active');
+  // Pulse fires when n8n call is in-flight OR any background agent is active
+  const agentPulseActive = isAgentActive || agents.some(a => a.status === 'active');
 
-  const captureTask = useCallback((text) => {
+  const captureTask = useCallback((text, meta) => {
     if (!text.trim()) return;
     const newTask = {
       id: `t${Date.now()}`,
       text: text.trim(),
       status: 'active',
       createdAt: Date.now(),
+      ...(meta && {
+        category: meta.category,
+        priority: meta.priority,
+        rationale: meta.rationale,
+      }),
     };
     setTasks(prev => [newTask, ...prev]);
     setLastCaptured(newTask.id);
     // Auto-clear the "captured" feedback after 2s
     setTimeout(() => setLastCaptured(null), 2000);
+  }, []);
+
+  const addDecisionReceipt = useCallback((receipt) => {
+    const enriched = {
+      ...receipt,
+      id: `dr_${Date.now()}`,
+      receivedAt: Date.now(),
+    };
+    setDecisionReceipts(prev => {
+      const next = [enriched, ...prev];
+      persistReceipts(next);
+      return next;
+    });
   }, []);
 
   const reorderTimeline = useCallback((oldIndex, newIndex) => {
@@ -106,6 +141,10 @@ export function JournalProvider({ children }) {
     isListening,
     agentPulseActive,
     lastCaptured,
+    isAgentActive,
+    setIsAgentActive,
+    decisionReceipts,
+    addDecisionReceipt,
     captureTask,
     reorderTimeline,
     toggleListening,

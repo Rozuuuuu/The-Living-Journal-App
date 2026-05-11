@@ -1,6 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+
+const WEBHOOK_STORAGE_KEY = 'n8n_webhook_url';
 
 export default function Settings() {
+  const [webhookUrl, setWebhookUrl] = useState('');
+  const [saved, setSaved] = useState(false);
+
+  useEffect(() => {
+    const stored = localStorage.getItem(WEBHOOK_STORAGE_KEY);
+    if (stored) setWebhookUrl(stored);
+  }, []);
+
+  const handleSaveWebhook = () => {
+    localStorage.setItem(WEBHOOK_STORAGE_KEY, webhookUrl.trim());
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2000);
+  };
+
   return (
     <div className="max-w-container-max mx-auto px-lg md:px-xxl py-xl">
       <div className="mb-xl">
@@ -61,20 +77,50 @@ export default function Settings() {
           </div>
 
           {/* n8n */}
-          <div className="bg-surface-container-lowest custom-shadow rounded-lg p-lg flex items-center justify-between border border-outline-variant/30">
-            <div className="flex items-center gap-md">
-              <div className="w-12 h-12 rounded-DEFAULT bg-surface-container-low flex items-center justify-center">
-                <span className="material-symbols-outlined text-secondary text-2xl">hub</span>
+          <div className="bg-surface-container-lowest custom-shadow rounded-lg p-lg border border-outline-variant/30">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-md">
+                <div className="w-12 h-12 rounded-DEFAULT bg-surface-container-low flex items-center justify-center">
+                  <span className="material-symbols-outlined text-secondary text-2xl">hub</span>
+                </div>
+                <div>
+                  <h4 className="font-label-md text-label-md text-primary">n8n Workflows</h4>
+                  <p className="font-label-sm text-label-sm text-on-surface-variant font-normal">Advanced automation webhooks</p>
+                </div>
               </div>
-              <div>
-                <h4 className="font-label-md text-label-md text-primary">n8n Workflows</h4>
-                <p className="font-label-sm text-label-sm text-on-surface-variant font-normal">Advanced automation webhooks</p>
+              <label className="relative inline-flex items-center cursor-pointer">
+                <input defaultChecked className="sr-only peer" type="checkbox" value=""/>
+                <div className="w-11 h-6 bg-surface-variant rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-secondary"></div>
+              </label>
+            </div>
+
+            {/* Webhook URL Input */}
+            <div className="mt-lg pt-lg border-t border-surface-variant/50">
+              <label className="font-label-md text-label-md text-primary block mb-xs">Webhook URL</label>
+              <p className="font-label-sm text-label-sm text-on-surface-variant mb-sm">Paste your n8n webhook URL to enable AI-powered Brain Dump processing.</p>
+              <div className="flex gap-sm">
+                <input
+                  type="url"
+                  value={webhookUrl}
+                  onChange={(e) => setWebhookUrl(e.target.value)}
+                  placeholder="https://your-n8n-instance.com/webhook/..."
+                  className="input-editorial flex-1 rounded-lg px-md py-sm font-body-md text-body-md text-primary placeholder:text-on-surface-variant/40"
+                />
+                <button
+                  onClick={handleSaveWebhook}
+                  className="bg-primary-container text-on-primary hover:opacity-90 px-lg py-sm rounded-lg font-label-md text-label-md transition-opacity flex items-center gap-sm"
+                >
+                  {saved ? (
+                    <>
+                      <span className="material-symbols-outlined text-[18px]" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+                      Saved
+                    </>
+                  ) : (
+                    'Save'
+                  )}
+                </button>
               </div>
             </div>
-            <label className="relative inline-flex items-center cursor-pointer">
-              <input defaultChecked className="sr-only peer" type="checkbox" value=""/>
-              <div className="w-11 h-6 bg-surface-variant rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-secondary"></div>
-            </label>
           </div>
         </section>
 
