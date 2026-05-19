@@ -1,9 +1,9 @@
 import { useState, useRef } from 'react';
 import { useJournal } from '../hooks/useJournal';
-import { processBrainDump, isWebhookConfigured } from '../services/n8nService';
+import { triggerAgentGoal } from '../services/agentService';
 
 export default function BrainDump() {
-  const { captureTask, lastCaptured, tasks, setIsAgentActive, addDecisionReceipt } = useJournal();
+  const { captureTask, lastCaptured, tasks, setIsAgentActive, addDecisionReceipt, setCurrentAgentLogs } = useJournal();
   const [inputText, setInputText] = useState('');
   const [isThinking, setIsThinking] = useState(false);
   const [error, setError] = useState(null);
@@ -13,36 +13,38 @@ export default function BrainDump() {
     if (!inputText.trim() || isThinking) return;
     setError(null);
 
-    // Graceful fallback: no webhook → local-only capture
-    if (!isWebhookConfigured()) {
-      captureTask(inputText);
-      setInputText('');
-      textareaRef.current?.focus();
-      return;
-    }
-
-    // n8n-powered capture
     setIsThinking(true);
     setIsAgentActive(true);
+    setCurrentAgentLogs(['Agent pulse initiated... Analyzing goal.']);
 
     try {
-      const result = await processBrainDump(inputText);
-      const taskText = result.task || inputText.trim();
-      const meta = {
-        category: result.category || 'Uncategorized',
-        priority: result.priority || 'medium',
-        rationale: result.rationale || '',
-      };
+      const result = await triggerAgentGoal(inputText);
+      
+      setCurrentAgentLogs(result.logs || []);
 
-      captureTask(taskText, meta);
-      addDecisionReceipt({ task: taskText, ...meta });
+      if (result.success) {
+        const meta = {
+          priority: result.task.priority,
+          rationale: result.task.rationale,
+        };
+
+        captureTask(result.task.title, meta);
+        addDecisionReceipt({ task: result.task.title, ...meta });
+      } else {
+        setError('Agent unreachable. Saved manually.');
+        const meta = { priority: 4, rationale: 'Manual fallback' };
+        captureTask(result.task.title, meta);
+        addDecisionReceipt({ task: result.task.title, ...meta });
+      }
+      
       setInputText('');
       textareaRef.current?.focus();
     } catch (err) {
-      setError(err.message || 'Failed to process with n8n. Task saved locally.');
-      // Fallback: save locally even on error
-      captureTask(inputText);
+      setCurrentAgentLogs([`Error: ${err.message}`]);
+      setError('Execution failed. Task saved manually.');
+      captureTask(inputText, { priority: 4, rationale: 'Manual fallback due to error' });
       setInputText('');
+      textareaRef.current?.focus();
     } finally {
       setIsThinking(false);
       setIsAgentActive(false);

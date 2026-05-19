@@ -90,6 +90,7 @@ export function JournalProvider({ children }) {
   const [lastCaptured, setLastCaptured] = useState(null);
   const [isAgentActive, setIsAgentActive] = useState(false);
   const [decisionReceipts, setDecisionReceipts] = useState(loadReceipts);
+  const [currentAgentLogs, setCurrentAgentLogs] = useState([]);
 
   // Pulse fires when n8n call is in-flight OR any background agent is active
   const agentPulseActive = isAgentActive || agents.some(a => a.status === 'active');
@@ -143,6 +144,8 @@ export function JournalProvider({ children }) {
     lastCaptured,
     isAgentActive,
     setIsAgentActive,
+    currentAgentLogs,
+    setCurrentAgentLogs,
     decisionReceipts,
     addDecisionReceipt,
     captureTask,

@@ -19,7 +19,7 @@ const PRIORITY_STYLES = {
 };
 
 export default function ActiveAgents() {
-  const { decisionReceipts } = useJournal();
+  const { decisionReceipts, currentAgentLogs } = useJournal();
 
   return (
     <div className="flex-1 w-full max-w-container-max mx-auto px-lg md:px-xxl py-xl md:py-xxl pb-32 md:pb-xxl">
@@ -110,6 +110,35 @@ export default function ActiveAgents() {
           </div>
         </article>
       </div>
+
+      {/* ===== Live Execution Log ===== */}
+      <section className="mt-xxl">
+        <div className="flex items-center gap-sm mb-xl">
+          <span className="material-symbols-outlined text-secondary text-[24px]">terminal</span>
+          <div>
+            <h2 className="font-headline-md text-headline-md text-primary">Live Execution Log</h2>
+            <p className="font-label-sm text-label-sm text-on-surface-variant mt-xs">Real-time reasoning from OpenClaw.</p>
+          </div>
+        </div>
+        
+        <div className="bg-[#2d2d2d] rounded-xl p-lg shadow-ambient-2 min-h-[150px]">
+          {currentAgentLogs && currentAgentLogs.length > 0 ? (
+            <ul className="space-y-sm">
+              {currentAgentLogs.map((log, i) => (
+                <li key={i} className="flex gap-sm items-start">
+                  <span className="text-[#9CAF88] select-none mt-0.5 font-body-md text-[14px]">{`>`}</span>
+                  <span className="font-body-md text-[14px] text-[#fdf8f8] leading-relaxed">{log}</span>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <div className="text-[#fdf8f8]/50 italic flex items-center gap-sm font-body-md text-[14px]">
+              <span className="material-symbols-outlined text-[16px]">hourglass_empty</span>
+              Awaiting goal submission...
+            </div>
+          )}
+        </div>
+      </section>
 
       {/* ===== Decision Receipts ===== */}
       <section className="mt-xxl">
