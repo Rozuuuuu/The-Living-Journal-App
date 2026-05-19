@@ -1,7 +1,7 @@
 
-import BrainDump from '../components/BrainDump';
+import BrainDump from './BrainDump';
 import ActiveAgent from '../components/ActiveAgent';
-import Inbox from '../components/Inbox';
+import Inbox from './Inbox';
 
 export default function BrainDumpPage() {
   return (

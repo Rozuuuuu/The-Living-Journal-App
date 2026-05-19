@@ -1,7 +1,7 @@
 
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { JournalProvider } from './hooks/useJournal'
-import MainLayout from './components/MainLayout'
+import MainLayout from './layouts/MainLayout'
 import BrainDumpPage from './pages/BrainDumpPage'
 import LivingDay from './pages/LivingDay'
 import ActiveAgents from './pages/ActiveAgents'

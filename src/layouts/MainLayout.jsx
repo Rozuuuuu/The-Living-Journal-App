@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
-import Sidebar from './Sidebar';
-import MobileHeader from './MobileHeader';
-import FloatingButton from './FloatingButton';
-import MobileNav from './MobileNav';
+import Sidebar from '../components/Sidebar';
+import MobileHeader from '../components/MobileHeader';
+import FloatingButton from '../components/FloatingButton';
+import MobileNav from '../components/MobileNav';
 
 export default function MainLayout() {
   const location = useLocation();
