@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { useJournal } from '../hooks/useJournal';
 import TimelineItem from '../components/SortableTimelineItem';
 

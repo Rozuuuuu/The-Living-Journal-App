@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
 export default function TimelineItem({ event, index, onDragStart, onDragOver, onDrop, isDragOver }) {
   const isCompleted = event.status === 'completed';
